@@ -1,0 +1,28 @@
+sources:
+  phonepe_pulse:
+    type: "git_repo"
+    url: "https://github.com/PhonePe/pulse.git"
+    branch: "master"
+    local_path: "data/bronze/phonepe_pulse/repo"
+    data_dirs:
+      - "data/aggregated/transaction/country/india"
+      - "data/aggregated/transaction/state"
+      - "data/map/transaction/hover/country/india"
+      - "data/aggregated/user/country/india"
+      - "data/aggregated/insurance/country/india"
+
+  npci:
+    type: "web_scrape"
+    base_url: "https://www.npci.org.in/what-we-do/upi/product-statistics"
+    method: "selenium"
+    output_dir: "data/bronze/npci"
+
+  rbi_dbie:
+    type: "api"
+    base_url: "https://dbie.rbi.org.in"
+    datasets:
+      - name: "payment_system_indicators"
+        endpoint: "/DBIE/dbie.rbi?site=statistics"
+      - name: "currency_in_circulation"
+        endpoint: "/DBIE/dbie.rbi?site=statistics"
+    output_dir: "data/bronze/rbi"

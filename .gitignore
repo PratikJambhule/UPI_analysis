@@ -1,0 +1,75 @@
+# ═══════════════════════════════════════════════════
+# UPI Analytics Platform — .gitignore
+# ═══════════════════════════════════════════════════
+
+# ── Data Layer (large files, regenerable) ──────────
+# Ignore data files by type, not directory — preserves .gitkeep structure
+data/**/*.parquet
+data/**/*.csv
+data/**/*.json
+data/**/*.xlsx
+data/**/*.xls
+data/**/*.duckdb
+data/**/*.duckdb.wal
+data/**/*.geojson
+
+# EXCEPT: Gold exports needed by Streamlit Cloud deployment
+!data/gold/exports/
+!data/gold/exports/*.parquet
+
+# ── Python ─────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Virtual Environments ──────────────────────────
+.venv/
+venv/
+env/
+ENV/
+
+# ── IDE / Editor ──────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+
+# ── Environment & Secrets ─────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── DuckDB ────────────────────────────────────────
+*.duckdb
+*.duckdb.wal
+
+# ── Jupyter Notebooks ─────────────────────────────
+.ipynb_checkpoints/
+
+# ── OS Files ──────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── Power BI (large binary) ──────────────────────
+# Uncomment if .pbix is too large for git:
+# dashboards/*.pbix
+
+# ── Logs ──────────────────────────────────────────
+*.log
+/logs/
+
+# ── Docs (internal planning/build logs) ──────────
+docs/
+
+# ── Streamlit ─────────────────────────────────────
+.streamlit/secrets.toml

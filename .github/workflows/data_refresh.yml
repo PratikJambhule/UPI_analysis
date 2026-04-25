@@ -1,0 +1,76 @@
+name: Monthly Data Pipeline Refresh
+
+on:
+  workflow_dispatch:
+    inputs:
+      force_refresh:
+        description: "Force full data refresh"
+        required: false
+        default: "false"
+
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Data Ingestion (Bronze)
+        run: python -m src.pipeline.run_pipeline --stage ingest
+        env:
+          PIPELINE_ENV: "ci"
+
+      - name: Run Transformation (Silver)
+        run: python -m src.pipeline.run_pipeline --stage transform
+
+      - name: Run Modeling (Gold)
+        run: python -m src.pipeline.run_pipeline --stage model
+
+      - name: Run Analytics
+        run: python -m src.pipeline.run_pipeline --stage analyze
+
+      - name: Run Tests
+        run: pytest tests/ -v --tb=short
+
+      - name: Upload Data Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: data-artifacts-${{ github.run_number }}
+          path: |
+            data/gold/exports/
+            docs/insights_report.md
+          retention-days: 90
+
+      - name: Commit updated outputs
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "Data Pipeline Bot"
+          git add docs/insights_report.md data/gold/exports/
+          git diff --staged --quiet || git commit -m "🔄 Monthly data refresh: $(date +'%B %Y')"
+          git push
+
+      - name: Annotate on failure
+        if: failure()
+        run: echo "::error::Pipeline failed! Check logs for details."

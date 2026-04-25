@@ -1,0 +1,24 @@
+project:
+  name: "UPI Analytics Platform"
+  version: "1.0.0"
+  author: "Your Name"
+
+paths:
+  bronze: "data/bronze"
+  silver: "data/silver"
+  gold: "data/gold"
+  geojson: "data/geojson"
+
+database:
+  type: "duckdb"
+  path: "data/gold/upi_analytics.duckdb"
+
+pipeline:
+  schedule: "monthly"
+  retry_attempts: 3
+  timeout_seconds: 300
+
+logging:
+  level: "INFO"
+  file: "logs/pipeline.log"
+  rotation: "10 MB"
