@@ -126,7 +126,7 @@ for tab, page in zip(tabs, TAB_PAGES):
         st.markdown(
             '<p class="footer-text">'
             'Made by <a href="https://github.com/PratikJambhule" target="_blank">Pratik Jambhule</a>'
-            ' · <a href="https://github.com/PratikJambhule" target="_blank">GitHub Profile</a>'
+            ' · <a href="https://github.com/PratikJambhule/UPI_analysis" target="_blank">GitHub Repository</a>'
             '</p>',
             unsafe_allow_html=True,
         )

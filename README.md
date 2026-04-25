@@ -187,8 +187,8 @@ No API keys, credentials, or environment variables are needed. All three data so
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/UPI_DS_Project.git
-cd UPI_DS_Project
+git clone https://github.com/PratikJambhule/UPI_analysis.git
+cd UPI_analysis
 ```
 
 ### Step 2: Install Dependencies
@@ -238,7 +238,7 @@ Runs 28 unit and smoke tests covering chart builders, KPI formatters, and page m
 1. Push this project to your GitHub repository under your account (`PratikJambhule`).
 2. Go to [Streamlit Community Cloud](https://share.streamlit.io/).
 3. Click **New app** and select:
-	- **Repository**: `PratikJambhule/UPI_DS_Project`
+	- **Repository**: `PratikJambhule/UPI_analysis`
 	- **Branch**: `main`
 	- **Main file path**: `src/visualization/app.py`
 4. Click **Deploy**.
